@@ -807,7 +807,7 @@ bool Part::flatten() {
 	set_header("Content-Disposition", part.get_header("Content-Disposition"));
 
 	if (part.multipart) {
-		parts = move(part.parts);
+		parts = std::vector<Part>(std::move(part.parts));
 	} else {
 		multipart = false;
 		set_body(part.get_body());
