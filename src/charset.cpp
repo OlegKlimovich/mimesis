@@ -16,11 +16,10 @@
 */
 
 #include "charset.hpp"
-
-#include <iconv.h>
 #include <stdexcept>
 
-using namespace std;
+#ifdef HAS_ICONV
+#include <iconv.h>
 
 struct iconv_state {
 	iconv_t cd;
@@ -40,7 +39,12 @@ struct iconv_state {
 	}
 };
 
+#endif // HAS_ICONV
+
+using namespace std;
+
 string charset_decode(const string &charset, string_view in) {
+#ifdef HAS_ICONV
 	iconv_state cd("utf-8", charset.c_str());
 
 	string out;
@@ -65,4 +69,7 @@ string charset_decode(const string &charset, string_view in) {
 	}
 
 	return out;
+#else //HAS_ICONV
+    return in.data();
+#endif // HAS_ICONV
 }
