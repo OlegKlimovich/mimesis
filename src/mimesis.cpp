@@ -702,7 +702,13 @@ void Part::set_header_parameter(const string &field, const string &parameter, co
 static string get_date_string(const chrono::system_clock::time_point &date = chrono::system_clock::now()) {
 	time_t t = chrono::system_clock::to_time_t(date);
 	struct tm tm{};
+ 
+#if defined(_WIN32)
+    localtime_s(&tm, &t);
+#else // _WIN32
 	localtime_r(&t, &tm);
+#endif //_WIN32
+
 	char str[128];
 	char *oldlocale = setlocale(LC_TIME, "C");
 	size_t result = strftime(str, sizeof str, "%a, %d %b %Y %T %z", &tm);
