@@ -1,19 +1,11 @@
-cmake_minimum_required (VERSION 2.6)
+cmake_minimum_required (VERSION 3.1)
 project (mimesis)
 
-find_package(Iconv)
-if(Iconv_FOUND)
-   include_directories(${Iconv_INCLUDE_DIRS})
-   target_link_libraries(${Iconv_LIBRARIES})
-   add_definitions(-DHAS_ICONV)
-endif()
+set (CMAKE_CXX_STANDARD 11)
 
 # BUILD_SHARED_LIBS is a standard CMake variable, but we declare it here to
 # make it prominent since we are turning it off by default.
 option(BUILD_SHARED_LIBS "Build shared libraries (DLLs)." OFF)
-
-# This may not work on windows.
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++0x")
 
 add_subdirectory(src)
 

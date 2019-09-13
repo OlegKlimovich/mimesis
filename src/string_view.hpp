@@ -29,7 +29,7 @@
    OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#if __cplusplus >= 201703L
+#if (__cplusplus >= 201703L) || (defined(__clang__) && __clang_major__>3)
 #include <string_view>
 #else
 #include <stdexcept>
